@@ -1,29 +1,41 @@
 
 .popup {
+  display: inline-block;
   position: relative;
 }
 
+.popup .btn {
+  width: 100%;
+  height: 100%;
+}
+
 .popup-outer {
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100vh;
   background-color: transparent;
-  display: none;
-  z-index: 2;
+  z-index: 3;
+}
+
+.appear .popup-outer {
+  display: block;
 }
 
 .popup-group {
   position: absolute;
   top: calc(100% + 15px);
   right: 0px;
-  display: none;
-  width: 300px;
+  width: 200px;
   z-index: 3;
+  display: none;
 }
 
-.popup-group > div {
+.popup-group .popup-group-content {
+  z-index: 4;
+  display: block;
   position: relative;
   padding: 20px 30px;
   width: 100%;
@@ -40,7 +52,7 @@
   animation: appear 0.3s ease-out;
 }
 
-.popup-group > div::before {
+.popup-group > .popup-group-content::before {
   content: "";
   position: absolute;
   top: -4px;
@@ -49,4 +61,38 @@
   height: 16px;
   transform: rotate(45deg);
   background-color: var(--popup-color);
+} 
+
+.appear {
+  display: flex;
+  animation: appear 0.3s ease-out;
+}
+
+.disappear {
+  display: flex;
+  animation: disappear 0.3s ease-in forwards;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translate(0, -20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0, 0px);
+  }
+}
+
+@keyframes disappear {
+  from {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(0, 0px);
+  }
+  to {
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(0, 20px);
+  }
 }

@@ -15,7 +15,6 @@ function ListItemPopup({ visible, children }) {
 
 export default function TaskArea({ editTask, deleteTask, markDone, taskList }) {
   const [ popupItem,  setPopupItem ] = useState(null)
-  console.log(popupItem);
   return (
     <div className="task-area">
       <ul className="task-list">

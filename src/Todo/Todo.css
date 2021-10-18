@@ -102,28 +102,6 @@
   outline: none;
 }
 
-@keyframes appear {
-  from {
-    opacity: 0;
-    transform: translate(0, -20px);
-  }
-  to {
-    opacity: 1;
-    transform: translate(0, 0px);
-  }
-}
-
-@keyframes disappear {
-  to {
-    opacity: 0;
-    transform: translate(0, -20px);
-  }
-  from {
-    opacity: 1;
-    transform: translate(0, 0px);
-  }
-}
-
 .todo hr {
   height: 1px;
   border: none;

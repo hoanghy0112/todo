@@ -1,65 +1,70 @@
 
-import React, { useRef, useContext, useState } from 'react'
+import React, { useRef, useContext, useState, useEffect, forwardRef } from 'react'
 import { PopupContext } from '../../Contexts/PopupContext.js'
+import './Popup.css'
 
 
-function PopupResource({ children }) {
+function PopupResource({ children, defaultState }) {
   const groupRef = useRef(null)
-  const [ state, setState ] = useState('appear')
+  const [ state, setState ] = useState(() => {
+    return defaultState
+  })
+  useEffect(() => {
+    // groupRef.current.style.display = defaultState === 'appear' ? 'flex' : 'none'
+  }, [])
 
   const popupAppear = () => {
-    // groupRef.current.style.display = 'flex'
     groupRef.current.classList.add('appear')
     groupRef.current.classList.remove('disappear')
     setState(prev => 'appear')
   }
 
   const popupDisappear = () => {
-    // groupRef.current.style.animation = 'disappear 0.3s ease-out forwards'
-    // setTimeout(() => {
-    //   groupRef.current.style.display = 'none'
-    //   groupRef.current.style.animation = 'appear 0.3s ease-out'
-    // }, 300)
-    // groupRef.current.style.display = 'none'
     groupRef.current.classList.remove('appear')
     groupRef.current.classList.add('disappear')
     setState(prev => 'disappear')
   }
 
   return (
-    <PopupContext.Provider 
-      value={{
-        popupAppear, 
-        popupDisappear,
-        groupRef,
-        state,
-      }}
-    >
-      <div>{ children }</div>
+    <PopupContext.Provider value={{ popupAppear, popupDisappear, groupRef, state, }} >
+      { children }
     </PopupContext.Provider>
   )
 }
 
-let PopupWrapper = Child => ({ children }) => {
+let PopupWrapper = ( Child ) => ({ children, defaultState, ...args }) => {
   return (
     <div className="popup">
-      <PopupResource>
-        <Child>
-          { children }
-        </Child>
+      <PopupResource defaultState={defaultState}>
+        <Child {...args} > { children } </Child>
       </PopupResource>
     </div>
   )
 }
 
-function Example({ children }) {
+function Button({ children, buttonTitle, onClick, width, ...args }) {
   const { popupAppear, popupDisappear, groupRef, state } = useContext(PopupContext) 
   return (
     <React.Fragment>
-      <button className="btn" onClick={ state === 'appear' ? popupDisappear : popupAppear} >Enable popup</button>
-      <div ref={groupRef} class="popup-group">{ children }</div>
+      <button 
+        className="btn" 
+        onClick={ state === 'appear' ? popupDisappear : popupAppear} 
+        { ...args }
+      >
+        { buttonTitle }
+      </button>
+      <div ref={groupRef} className="popup-group" style={{width}}>
+        <div onClick={popupDisappear} className="popup-outer"></div>
+        <div className="popup-group-content">{ children }</div>
+      </div>
     </React.Fragment>
   )
 }
 
-export let ExamplePopup = PopupWrapper(Example) 
+export let ButtonPopup = forwardRef(
+  (props, ref) => React.createElement(
+    PopupWrapper(
+      forwardRef((props, ref) => <Button {...props} ref={ref} />)),
+      { ...props, ref }
+  )
+)

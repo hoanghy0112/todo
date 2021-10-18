@@ -3,7 +3,7 @@ import React from 'react'
 import Header from './Header.js'
 import InputArea from './InputArea.js'
 import TaskArea from './TaskArea.js'
-import { ExamplePopup } from './Components/Popup/Popup.js'
+import { ButtonPopup } from './Components/Popup/Popup.js'
 import { useState, useEffect, useContext, useRef } from 'react'
 
 
@@ -66,12 +66,10 @@ export default function Todo() {
     return (() => {
       let displayList = taskList
       displayList = displayList.reduce((acc, task) => {
-        console.log(acc)
         if (task.isStar) acc.unshift(task)
         else acc.push(task)
         return acc
       }, [])
-      console.log(filterType);
       switch (filterType) {
         case 'incompleted-only': 
           displayList = displayList.filter(task => !task.isDone)
@@ -84,17 +82,12 @@ export default function Todo() {
         case 'time':
           displayList.sort((a, b) => a.date > b.date ? 1 : -1)
       }
-      console.log(displayList);
       return displayList
     })()
   }
 
-  console.log(taskList);
   return (
     <div className="todo">
-      <ExamplePopup>
-        <p>Hello world</p>
-      </ExamplePopup>
       <Header 
         changeFilter={setFilterMode} 
         markDoneAll={() => taskList.map(task => handleMarkdone(task.id, true))} 

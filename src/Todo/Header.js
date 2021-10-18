@@ -1,21 +1,21 @@
 import { useRef } from 'react'
 import Popup from './Popup.js'
 
+import { ButtonPopup } from './Components/Popup/Popup.js'
+
 export default function Header({ changeFilter, markDoneAll, deleteAll }) {
   const selectRef = useRef(null)
   const checkboxRef = useRef(null)
   return (
     <div className="header">
       <h1>Todo</h1>
-      <Popup width="250px">
-        <button className="btn">Options</button>
+      <ButtonPopup buttonTitle="Options">
+
         <div className="function-filter">
           <select defaultValue="" ref={selectRef} name="filter" onChange={() => changeFilter(prev => ({ ...prev, sortType: selectRef.current.value }))}>
             <option value="" disabled={false} >Default</option>
             <option value="name">Sort by name</option>
-            {/* <option value="date-create">Sort by date modified</option> */}
             <option value="time">Sort by time</option>
-            {/* <option value="done"></option> */}
           </select>
         </div>
         <hr />
@@ -42,7 +42,41 @@ export default function Header({ changeFilter, markDoneAll, deleteAll }) {
             Delete all
           </button>
         </div>
-      </Popup>
+      </ButtonPopup>
+      {/* <Popup width="250px">
+        <button className="btn">Options</button>
+        <div className="function-filter">
+          <select defaultValue="" ref={selectRef} name="filter" onChange={() => changeFilter(prev => ({ ...prev, sortType: selectRef.current.value }))}>
+            <option value="" disabled={false} >Default</option>
+            <option value="name">Sort by name</option>
+            <option value="time">Sort by time</option>
+          </select>
+        </div>
+        <hr />
+        <label className="checkbox">
+          <input ref={checkboxRef} type="checkbox" onChange={() => changeFilter(prev => ({ ...prev, filterType: ((checkboxRef.current.checked && 'incompleted-only') || 'all')}))} />
+          Incomplete tasks only
+        </label>
+        <hr />
+        <div className="function-button">
+          <button 
+            onClick={() => {
+                markDoneAll()
+              }} 
+            className="btn"
+          >
+            Mark done all
+          </button>
+          <button 
+            onClick={() => {
+                deleteAll()
+              }} 
+            className="btn warning"
+          >
+            Delete all
+          </button>
+        </div>
+      </Popup> */}
       {/* <div 
         className="options btn"
         onClick={popupAppear} 
