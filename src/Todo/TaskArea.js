@@ -1,72 +1,59 @@
 
-import more from '../more.svg'
-import { PopupDefault, popupResources } from './Popup.js'
+// import { ListItemPopup } from './Components/Popup/Popup.js'
+import { PopupWrapper } from './Components/Popup/Popup'
+import { PopupContext } from './Contexts/PopupContext'
 import React, { useContext, useState } from 'react'
 
-function ListItemPopup({ visible, children }) {
-  const { popupAppear, popupDisappear } = useContext(popupResources)
-  if (visible==='enter') popupAppear()
-  else if (visible==='leave') popupDisappear()
-
+const ListItemPopup = PopupWrapper(function ({popupItem, task, setPopupItem, editTask, deleteTask, markDone}) {
+  const { popupAppear, popupDisappear, groupRef, state } = useContext(PopupContext)
   return (
-      <React.Fragment>{ children }</React.Fragment>
-  )
-}
+    <React.Fragment>
+      <li 
+        onClick={() => markDone(task.id)}
+        className={`task-list-item ${task.isDone ? 'disable' : 'active'}`}
+        onMouseEnter={() => { popupAppear() }}
+        onMouseLeave={() => { popupDisappear() }}
+      >
+          <span>
+            <div class="task-title"
+            >{ task.title }  </div>
+            <span className="task-date">-- {task.date}</span>
+          </span>
 
-export default function TaskArea({ editTask, deleteTask, markDone, taskList }) {
-  const [ popupItem,  setPopupItem ] = useState(null)
+          <div className="more-icon">
+            {
+              task.isStar ?
+                <i 
+                  onClick={(event) => {
+                    event.stopPropagation()
+                    editTask( task.id, { isStar: !task.isStar })
+                  }} 
+                  className="fas fa-star"
+                ></i> :
+                <i 
+                  onClick={(event) => {
+                    event.stopPropagation()
+                    editTask( task.id, { isStar: !task.isStar })
+                  }} 
+                  className="far fa-star"
+                ></i> 
+            }
+            <i className="fas fa-pencil-alt"></i>
+
+            <i onClick={() => deleteTask(task.id)} className="fas fa-trash"></i>
+          </div>
+      </li>
+      <div ref={groupRef} className="popup-group"><div className="popup-group-content">{ task.description }</div></div>
+    </React.Fragment>
+  )
+})
+
+export default function TaskArea({ taskList, ...args }) {
   return (
     <div className="task-area">
       <ul className="task-list">
         { taskList.map(task => (
-          <li 
-            key={ task.id } 
-            onClick={() => markDone(task.id)}
-            className={`task-list-item ${task.isDone ? 'disable' : 'active'}`}
-            onMouseEnter={() => {
-              setPopupItem({ id: task.id, state: 'enter' })
-            }}
-            onMouseLeave={() => {
-              setPopupItem({ id: task.id, state: 'leave' })
-            }}
-          >
-              <span>
-                { task.title }  
-                <span className="task-date">-- {task.date}</span>
-              </span>
-
-              {
-                task.description &&
-                <PopupDefault>
-                  <ListItemPopup visible={ task.id === popupItem?.id ? popupItem.state : null}>
-                    <div class="task-popup">
-                      <div className="task-description">{ task.description }</div>
-                      <div className="task-time">{ task.date }</div>
-                    </div>
-                  </ListItemPopup>
-                </PopupDefault>
-              }
-              
-              <div className="more-icon">
-                {/* <svg height="16px" id="Layer_1" version="1.1" viewBox="0 0 16 16" width="16px" ><path d="M2,6C0.896,6,0,6.896,0,8s0.896,2,2,2s2-0.896,2-2S3.104,6,2,6z M8,6C6.896,6,6,6.896,6,8s0.896,2,2,2s2-0.896,2-2  S9.104,6,8,6z M14,6c-1.104,0-2,0.896-2,2s0.896,2,2,2s2-0.896,2-2S15.104,6,14,6z"/></svg> */}
-                {/* <i class="far fa-times-circle"></i> */}
-                {
-                  task.isStar ?
-                    <i onClick={(event) => {
-                      event.stopPropagation()
-                      editTask( task.id, { isStar: !task.isStar })
-                    }} class="fas fa-star"></i> :
-                    <i onClick={(event) => {
-                      event.stopPropagation()
-                      editTask( task.id, { isStar: !task.isStar })
-                    }} class="far fa-star"></i> 
-                    // <i  onClick={() => editTask( task.id, { isStar: !task.isStar })} class="far fa-star"></i>
-                }
-                <i class="fas fa-pencil-alt"></i>
-
-                <i onClick={() => deleteTask(task.id)} class="fas fa-trash"></i>
-              </div>
-          </li>
+          <ListItemPopup key={task.id} task={task} {...args}></ListItemPopup>
         )) }
       </ul>
     </div>

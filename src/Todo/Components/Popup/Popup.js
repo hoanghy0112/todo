@@ -32,7 +32,7 @@ function PopupResource({ children, defaultState }) {
   )
 }
 
-let PopupWrapper = ( Child ) => ({ children, defaultState, ...args }) => {
+export let PopupWrapper = ( Child ) => ({ children, defaultState, ...args }) => {
   return (
     <div className="popup">
       <PopupResource defaultState={defaultState}>
@@ -60,6 +60,22 @@ function Button({ children, buttonTitle, onClick, width, ...args }) {
     </React.Fragment>
   )
 }
+
+function ListItem({ visible, children }) {
+  const { popupAppear, popupDisappear, groupRef, state } = useContext(PopupContext)
+  if (visible==='enter') popupAppear()
+  else if (visible==='leave') popupDisappear()
+
+  return (
+      <React.Fragment>
+        <div ref={groupRef} className="popup-group">
+          <div class="popup-group-content">{ children }</div>
+        </div>
+      </React.Fragment>
+  )
+}
+export let ListItemPopup = PopupWrapper(ListItem)
+
 
 export let ButtonPopup = forwardRef(
   (props, ref) => React.createElement(

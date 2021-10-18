@@ -163,6 +163,10 @@
   position: relative;
 }
 
+.todo .task-area .task-list .task-list-item .popup-group-content {
+  color: black !important;
+}
+
 .todo .task-area .task-list .task-list-item.disable {
   background-color: var(--disable-color);
 }
@@ -192,6 +196,10 @@
   color: black;
   font-family: 'Patrick Hand', cursive;
   font-size: 1.1rem;
+}
+
+.fas.fa-star {
+  color: yellow;
 }
 /* 
 .todo .task-list-item .task-description {
