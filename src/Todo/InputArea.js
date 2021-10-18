@@ -1,6 +1,6 @@
 
 import { useRef, useState, useContext } from 'react'
-import Popup, { popupResources } from './Components/Popup/Popup.js'
+import Popup, { popupResources } from './Popup.js'
 import './Popup.css'
 import React from 'react'
 

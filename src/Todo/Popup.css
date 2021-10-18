@@ -1,0 +1,61 @@
+
+.toggle-popup {
+  height: 100%;
+}
+
+.toggle-popup > * {
+  width: 100%;
+  height: 100%;
+}
+
+.popup {
+  position: relative;
+}
+
+.popup-outer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: transparent;
+  display: none;
+  z-index: 2;
+}
+
+.popup-group {
+  position: absolute;
+  top: calc(100% + 15px);
+  right: 0px;
+  display: none;
+  width: 300px;
+  z-index: 3;
+}
+
+.popup-group > div {
+  position: relative;
+  padding: 20px 30px;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  top: 0px;
+  right: 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  justify-content: space-between;
+  background-color: var(--popup-color);
+  box-shadow: 0 0 60px -30px black;
+  animation: appear 0.3s ease-out;
+}
+
+.popup-group > div::before {
+  content: "";
+  position: absolute;
+  top: -4px;
+  right: 20px;
+  width: 16px;
+  height: 16px;
+  transform: rotate(45deg);
+  background-color: var(--popup-color);
+}

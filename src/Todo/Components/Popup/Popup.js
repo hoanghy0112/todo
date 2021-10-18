@@ -1,97 +1,75 @@
 
-import { useRef } from 'react'
-import React from 'react'
+// import userEvent from '@testing-library/user-event'
+import React, { useRef, useContext } from 'react'
+import { PopupContext } from '../../Contexts/PopupContext.js'
 
-export const popupResources = React.createContext()
+// const { popupAppear, popupDisappear, state } = useContext(PopupContext.Provider);
 
-export function TogglePopup({ onClick, children }) {
+function Popup({ width, height, children }) {
+  const groupRef = useRef(null)
+
+  const popupAppear = () => {
+    groupRef.current.style.display = 'flex'
+  }
+
+  const popupDisappear = () => {
+    groupRef.current.style.animation = 'disappear 0.3s ease-out forwards'
+    setTimeout(() => {
+      groupRef.current.style.display = 'none'
+      groupRef.current.style.animation = 'appear 0.3s ease-out'
+    }, 300)
+  }
+
   return (
-    <div className="toggle-popup" onClick={onClick}>
+    <PopupContext.Provider 
+      value={{
+        popupAppear, popupDisappear
+      }}
+    >
       { children }
-    </div>
+    </PopupContext.Provider>
   )
 }
 
-export function PopupDefault({ width, children}) {
-  // const outerRef = useRef(null)
-  const groupRef = useRef(null)
+export function PopupWrapper({ children }) {
+  return (
+    <Popup {...args} >
+      { children }
+    </Popup>
+  )
+}
 
-  const popupAppear = () => {
-    groupRef.current.style.display = 'flex'
-    // outerRef.current.style.display = 'block'
-  }
-
-  const popupDisappear = () => {
-    // outerRef.current.style.display = 'none'
-    groupRef.current.style.animation = 'disappear 0.3s ease-out forwards'
-    setTimeout(() => {
-      groupRef.current.style.display = 'none'
-      groupRef.current.style.animation = 'appear 0.3s ease-out'
-    }, 300)
+export function ExamplePopup({ width, height, children }) {
+  
+  function InnerPopup({ width, height, children }) {
+    const { popupAppear, popupDisappear } = useContext(PopupContext)
+    return (
+      <React.Fragment>
+        <button onClick={popupAppear} >Enable popup</button>
+        { children }
+      </React.Fragment>
+    )
   }
 
   return (
-    // <div className="popup">
-      <popupResources.Provider value={{
-        popupAppear,
-        popupDisappear,
-      }}>
-        {/* <TogglePopup
-          onClick={popupAppear}
-        >
-          { children[0] }
-        </TogglePopup> */}
-        {/* <div
-          className="popup-outer"
-          ref={outerRef}
-          // onClick={popupDisappear}
-        ></div> */}
-        <div ref={groupRef} className="popup-group" style={{width}}>
-          <div>{ children }</div>
-        </div>
-      </popupResources.Provider>
+    <Popup width={width} height={height} >
+      <InnerPopup>
+        {children}
+      </InnerPopup>
+    </Popup>
   )
 }
 
-export default function Popup({ width, children }) {
-  const outerRef = useRef(null)
-  const groupRef = useRef(null)
-
-  const popupAppear = () => {
-    groupRef.current.style.display = 'flex'
-    outerRef.current.style.display = 'block'
-  }
-
-  const popupDisappear = () => {
-    outerRef.current.style.display = 'none'
-    groupRef.current.style.animation = 'disappear 0.3s ease-out forwards'
-    setTimeout(() => {
-      groupRef.current.style.display = 'none'
-      groupRef.current.style.animation = 'appear 0.3s ease-out'
-    }, 300)
-  }
-
-
-  return (
-    <div className="popup">
-      <popupResources.Provider value={{
-        popupAppear,
-        popupDisappear,
-      }}>
-        <TogglePopup
-          onClick={popupAppear}
-        >
-          { children[0] }
-        </TogglePopup>
-        <div
-          className="popup-outer"
-          ref={outerRef}
-          onClick={popupDisappear}
-        ></div>
-        <div ref={groupRef} className="popup-group" style={{width}}>
-          <div>{ children.slice(1) }</div>
-        </div>
-      </popupResources.Provider>
-    </div>
-  )
-}
+export let ExamplePopup = () =>  (
+  <PopupWrapper>
+    {(function() {
+      const { popupAppear, popupDisappear } = useContext(PopupContext)
+      return (
+        <React.Fragment>
+          <button onClick={popupAppear} >Enable popup</button>
+          { children }
+        </React.Fragment>
+      )
+    })()}
+  </PopupWrapper>
+)

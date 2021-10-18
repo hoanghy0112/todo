@@ -1,6 +1,6 @@
 
 import more from '../more.svg'
-import { PopupDefault, popupResources } from './Components/Popup/Popup.js'
+import { PopupDefault, popupResources } from './Popup.js'
 import React, { useContext, useState } from 'react'
 
 function ListItemPopup({ visible, children }) {

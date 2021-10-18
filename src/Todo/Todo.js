@@ -3,6 +3,7 @@ import React from 'react'
 import Header from './Header.js'
 import InputArea from './InputArea.js'
 import TaskArea from './TaskArea.js'
+import { ExamplePopup } from './Components/Popup/Popup.js'
 import { useState, useEffect, useContext, useRef } from 'react'
 
 
@@ -91,6 +92,9 @@ export default function Todo() {
   console.log(taskList);
   return (
     <div className="todo">
+      <ExamplePopup>
+        <p>Hello world</p>
+      </ExamplePopup>
       <Header 
         changeFilter={setFilterMode} 
         markDoneAll={() => taskList.map(task => handleMarkdone(task.id, true))} 
