@@ -20,7 +20,7 @@ export default function Todo() {
   }
 
   const [ filterMode, setFilterMode ] = useState({
-    sortType: 'default',
+    sortType: '',
     filterType: 'default'
   })
 
@@ -65,11 +65,6 @@ export default function Todo() {
   const handleFilter = ({ sortType, filterType }) => {
     return (() => {
       let displayList = taskList
-      displayList = displayList.reduce((acc, task) => {
-        if (task.isStar) acc.unshift(task)
-        else acc.push(task)
-        return acc
-      }, [])
       switch (filterType) {
         case 'incompleted-only': 
           displayList = displayList.filter(task => !task.isDone)
@@ -82,6 +77,11 @@ export default function Todo() {
         case 'time':
           displayList.sort((a, b) => a.date > b.date ? 1 : -1)
       }
+      displayList = displayList.reduce((acc, task) => {
+        if (task.isStar) acc.unshift(task)
+        else acc.push(task)
+        return acc
+      }, [])
       return displayList
     })()
   }
@@ -89,6 +89,7 @@ export default function Todo() {
   return (
     <div className="todo">
       <Header 
+        filterMode={filterMode}
         changeFilter={setFilterMode} 
         markDoneAll={() => taskList.map(task => handleMarkdone(task.id, true))} 
         deleteAll={() => setTaskList([])} 

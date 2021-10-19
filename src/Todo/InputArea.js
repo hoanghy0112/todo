@@ -27,6 +27,9 @@ function FormInput({ title, onChange, inputRef }) {
           type="text" 
           value={formData.title}
           onChange={event => {
+            if (formData.title === '') 
+              handleChange(event, { title: event.target.value.toUpperCase() })
+            else
             handleChange(event, { title: event.target.value })
           }}
         />
@@ -61,13 +64,12 @@ export default function InputArea({ addTask }) {
   const inputRef = useRef()
 
   function handleSubmit(  ) {
-    if (title !== '') {
+    if (formData.current.title !== '') {
       let task = formData.current
-      console.log(task)
-      console.log(title)
       addTask(task)
       setTitle('')
       formData.current = {}
+      inputRef.current.focus()
     }
   }
 
@@ -82,8 +84,14 @@ export default function InputArea({ addTask }) {
         value={title}
         className="task-input" 
         onChange={(event) => {
-          setTitle(() => event.target.value)
-          handleChange({ title: event.target.value })
+          if (title === '') {
+            setTitle(() => event.target.value.toUpperCase())
+            handleChange({ title: event.target.value.toUpperCase()})
+          }
+          else {
+            setTitle(() => event.target.value)
+            handleChange({ title: event.target.value })
+          }
         }}
         type="text" 
         placeholder="Enter your task here..." 

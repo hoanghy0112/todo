@@ -199,8 +199,20 @@
   font-size: 1.1rem;
 }
 
+.fas, .far {
+  transition: 0.2s;
+}
+
 .fas.fa-star {
   color: yellow;
+}
+
+.far.fa-star:hover {
+  color: yellow;
+}
+
+.fas.fa-trash:hover {
+  color: var(--delete-color);
 }
 /* 
 .todo .task-list-item .task-description {
