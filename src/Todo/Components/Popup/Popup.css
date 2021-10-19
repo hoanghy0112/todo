@@ -32,7 +32,7 @@
   display: none;
 }
 
-.popup-group .popup-group-content {
+.popup-group-content {
   z-index: 4;
   display: block;
   position: relative;
@@ -49,9 +49,10 @@
   background-color: var(--popup-color);
   box-shadow: 0 0 60px -30px black;
   animation: appear 0.3s ease-out;
+  color: black;
 }
 
-.popup-group > .popup-group-content::before {
+.popup-group-content::before {
   content: "";
   position: absolute;
   top: -4px;

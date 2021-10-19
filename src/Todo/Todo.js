@@ -2,7 +2,7 @@ import './Todo.css'
 import React from 'react'
 import Header from './Components/Header/Header.js'
 import InputArea from './Components/InputArea/InputArea.js'
-import TaskArea from './TaskArea.js'
+import TaskArea from './Components/TaskArea/TaskArea.js'
 import { useState, useEffect, useContext, useRef } from 'react'
 
 

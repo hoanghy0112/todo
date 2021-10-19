@@ -1,0 +1,88 @@
+
+.todo .input-area { 
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 5fr 1fr 1fr;
+  height: 40px;
+  margin-top: 20px;
+}
+
+.todo .input-area .task-input {
+  border: none; 
+  background-color: transparent;
+  font-size: 1rem;
+  padding-bottom: 0px;
+}
+
+.todo .input-area .task-input:focus {
+  border: none;
+  outline: none;
+  border-bottom: 3px solid var(--primary-color);
+}
+
+.todo form.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.todo .edit-input {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.todo .edit-input .title {
+  color: #868686;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+textarea {
+  font-family: sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+}
+
+.todo .edit-input > input, .todo .edit-input > textarea {
+  padding: 9px 10px;
+  border: 1px solid var(--disable-color);
+  border-radius: 15px;
+  resize: none;
+  appearance: none;
+}
+
+.todo .edit-input > *:focus {
+  outline: none;
+}
+
+
+
+
+
+@media (max-width: 550px) {
+  .todo .input-area {
+    grid-template-columns: 1fr 1fr !important;
+    grid-template-rows: 40px 40px;
+    height: 90px;
+    grid-template-areas: 
+                      "a a"
+                      "b c";
+  }
+  .input-area .task-input {
+    grid-area: a;
+  }
+  .input-area > .popup {
+    grid-area: b;
+  }
+  .input-area > button {
+    grid-area: c;
+  }
+  .input-area > .popup .popup-group {
+    --position: -10px;
+    left: var(--position) ;
+  }
+  .input-area > .popup .popup-group-content::before {
+    left: calc(80px - var(--position)) ;
+  }
+}

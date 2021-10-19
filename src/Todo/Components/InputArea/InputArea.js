@@ -1,14 +1,19 @@
 
+import './InputArea.css'
+
 import { useRef, useState, useEffect } from 'react'
 import React from 'react'
 
 import { ButtonPopup } from '../Popup/Popup.js'
 
 
-function FormInput({ title, onChange, inputRef }) {
-  const [ formData, setFormData ] = useState({ title })
+export function EditFormBase({ defaultVal, onChange=() => {}, outerRef, onSubmit, ...args }) {
+  const [ formData, setFormData ] = useState({ ...defaultVal })
   useEffect(() => {
-    inputRef.current.value = formData.title
+    if (outerRef) {
+      outerRef.current.value = formData.title
+      outerRef.current.textContent = formData.title
+    }
   }, [formData.title])
 
   const handleChange = ( event, newState ) => {
@@ -19,8 +24,13 @@ function FormInput({ title, onChange, inputRef }) {
     })
   }
 
+  const handleSubmit = (event, ...args) => {
+    event.preventDefault()
+    onSubmit(formData)
+  }
+
   return (
-    <form className="edit-form">
+    <form onSubmit={handleSubmit} onClick={e => e.stopPropagation()} className="edit-form">
       <label className="edit-input">
         <div className="title">Title</div>
         <input 
@@ -39,6 +49,7 @@ function FormInput({ title, onChange, inputRef }) {
         <textarea 
           rows={5} 
           cols={20}
+          value={formData.description}
           onChange={event => handleChange(event, { description: event.target.value })}
         ></textarea>
       </label>
@@ -46,9 +57,11 @@ function FormInput({ title, onChange, inputRef }) {
         <div className="title">Date</div>
         <input 
           type="time" 
+          value={formData.date}
           onChange={event => handleChange(event, { date: event.target.value })}
         />
       </label>
+      <button type="submit" className="btn">Submit</button>
     </form>
   )
 }
@@ -101,12 +114,12 @@ export default function InputArea({ addTask }) {
         width={300} 
         buttonTitle={<i className="fas fa-pencil-alt"></i>} 
       >
-        <FormInput 
+        <EditFormBase 
           onChange={handleChange} 
           onSubmit={handleSubmit} 
-          title={title} 
-          inputRef={inputRef}
-        ></FormInput>
+          defaultVal={{ title: title || '' }} 
+          outerRef={inputRef}
+        ></EditFormBase>
       </ButtonPopup>
       <button onClick={handleSubmit} className="btn">
         <i className="fas fa-arrow-right"></i>

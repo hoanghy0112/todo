@@ -1,0 +1,138 @@
+
+.todo .task-area {
+  margin-top: 35px;
+}
+
+.todo .task-area .task-list {
+  list-style-type: none;
+}
+
+.todo .task-area .task-list .task-list-item {
+  display: grid; 
+  grid-template-columns: 3fr 1fr;
+  justify-content: space-between;
+  margin: 14px 0; 
+  padding: 15px;
+  padding-left: 20px;
+  color: white;
+  background-color: var(--primary-color);
+  border-radius: 10px;
+  transition: 0.2s;
+  box-shadow: 0 0 20px -10px black;
+  position: relative;
+}
+
+.popup-group {
+  --position: -150px;
+  left: var(--position);
+}
+
+.popup-group-content::before {
+  left: calc(20px - var(--position));
+}
+
+
+.todo .task-area .task-list .task-list-item .left-side .popup-group {
+  --position: -150px;
+  left: var(--position);
+}
+
+.todo .task-area .task-list .task-list-item .left-side .popup-group-content::before {
+  left: calc(20px - var(--position));
+}
+
+.todo .task-area .task-list .task-list-item.disable {
+  --btn-color: var(--disable-color) !important;
+  background-color: var(--disable-color);
+}
+
+.todo .task-area .task-list .task-list-item .more-icon {
+  fill: white !important;
+}
+
+.todo .task-area .task-list .task-list-item .more-icon > *:hover {
+  cursor: pointer;
+}
+
+.todo .task-list-item > .left-side {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.task-title {
+  max-width: 90%;
+}
+
+.todo .task-list-item > .left-side {
+}
+
+.todo .task-date {
+  color: #dadada;
+  font-size: 0.85rem;
+  margin-left: 10px;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.todo .task-list-item .more-icon {
+  display: flex;
+  align-items: center;
+  padding-left: 35px;
+}
+
+.todo .task-list-item .more-icon > * {
+  margin: 0 3px;
+}
+
+.todo .task-list-item .more-icon * {
+  font-size: 0.9rem;
+}
+
+.todo .task-list-item .task-description {
+  color: black;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1.1rem;
+}
+
+.fas, .far {
+  transition: 0.2s;
+}
+
+.fas.fa-star {
+  color: yellow;
+}
+
+div.star-icon:hover {
+  background-color: yellowgreen;
+  color: yellow;
+}
+
+div.trash-icon:hover {
+  background-color: var(--delete-color);
+  color: white;
+}
+
+
+/* -------------------------------------------------------------------------------------- */
+
+@media (max-width: 550px) {
+  .todo .task-area .task-list .task-list-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .todo .task-area .task-list .task-list-item .more-icon {
+    margin-top: 10px;
+    align-self: flex-end;
+  }
+  .todo .task-area .task-list .task-list-item .left-side {
+    justify-content: space-between;
+  }
+  
+  .todo .task-area .task-list .task-list-item .left-side .popup-group {
+    --position: -260px;
+  }
+}
