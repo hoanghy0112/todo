@@ -168,6 +168,7 @@
 }
 
 .todo .task-area .task-list .task-list-item.disable {
+  --primary-color: var(--disable-color) !important;
   background-color: var(--disable-color);
 }
 

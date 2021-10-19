@@ -16,10 +16,6 @@ code {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-
-  --primary-color: #255fff;
-  --background-color: #255fff;
-  --delete-color: #ff0e0e;
 }
 
 ::-webkit-scrollbar {
@@ -30,6 +26,10 @@ body {
   width: 100%;
   height: 100vh;
   background-color: var(--background-color);
+
+  --primary-color: #255fff;
+  --background-color: #255fff;
+  --delete-color: #ff0e0e;
 }
 
 #root {

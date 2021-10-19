@@ -64,12 +64,12 @@
 
 .appear {
   display: flex;
-  animation: appear 0.3s ease-out;
+  animation: appear 0.2s ease-out;
 }
 
 .disappear {
   display: flex;
-  animation: disappear 0.3s ease-in forwards;
+  animation: disappear 0.1s ease-in forwards;
 }
 
 @keyframes appear {
@@ -92,6 +92,6 @@
   to {
     opacity: 0;
     visibility: hidden;
-    transform: translate(0, 20px);
+    transform: translate(0, 60px);
   }
 }

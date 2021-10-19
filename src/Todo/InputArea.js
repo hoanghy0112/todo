@@ -53,12 +53,22 @@ function FormInput({ title, onChange, inputRef }) {
 
 export default function InputArea({ addTask }) {
   const [ title, setTitle ] = useState('')
-  const formData = useRef({})
+  const formData = useRef({
+    title: '',
+    description: '',
+    data: '',
+  })
   const inputRef = useRef()
 
   function handleSubmit(  ) {
-    let task = formData.current
-    addTask(task)
+    if (title !== '') {
+      let task = formData.current
+      console.log(task)
+      console.log(title)
+      addTask(task)
+      setTitle('')
+      formData.current = {}
+    }
   }
 
   function handleChange( task ) {
@@ -69,9 +79,11 @@ export default function InputArea({ addTask }) {
     <div className="input-area">
       <input 
         ref={inputRef} 
+        value={title}
         className="task-input" 
         onChange={(event) => {
           setTitle(() => event.target.value)
+          handleChange({ title: event.target.value })
         }}
         type="text" 
         placeholder="Enter your task here..." 

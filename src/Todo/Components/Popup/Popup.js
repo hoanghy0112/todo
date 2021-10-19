@@ -5,21 +5,23 @@ import './Popup.css'
 
 
 function PopupResource({ children, defaultState }) {
+  const currentState = useRef('')
   const groupRef = useRef(null)
   const [ state, setState ] = useState(() => {
     return defaultState
   })
   useEffect(() => {
-    // groupRef.current.style.display = defaultState === 'appear' ? 'flex' : 'none'
   }, [])
 
-  const popupAppear = () => {
+  const popupAppear = (event) => {
+    event.stopPropagation()
     groupRef.current.classList.add('appear')
     groupRef.current.classList.remove('disappear')
     setState(prev => 'appear')
   }
 
-  const popupDisappear = () => {
+  const popupDisappear = (event) => {
+    event.stopPropagation()
     groupRef.current.classList.remove('appear')
     groupRef.current.classList.add('disappear')
     setState(prev => 'disappear')
@@ -42,7 +44,7 @@ export let PopupWrapper = ( Child ) => ({ children, defaultState, ...args }) => 
   )
 }
 
-function Button({ children, buttonTitle, onClick, width, ...args }) {
+function Button({ children, buttonTitle, onClick, width='auto', ...args }) {
   const { popupAppear, popupDisappear, groupRef, state } = useContext(PopupContext) 
   return (
     <React.Fragment>
