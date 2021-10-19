@@ -1,9 +1,8 @@
 import './Todo.css'
 import React from 'react'
-import Header from './Header.js'
-import InputArea from './InputArea.js'
+import Header from './Components/Header/Header.js'
+import InputArea from './Components/InputArea/InputArea.js'
 import TaskArea from './TaskArea.js'
-import { ButtonPopup } from './Components/Popup/Popup.js'
 import { useState, useEffect, useContext, useRef } from 'react'
 
 
@@ -19,10 +18,19 @@ export default function Todo() {
     })
   }
 
-  const [ filterMode, setFilterMode ] = useState({
-    sortType: '',
-    filterType: 'default'
+  const [ filterMode, setFilterModeState ] = useState(() => {
+    return JSON.parse(localStorage.getItem('filterMode')) || {
+      sortType: '',
+      filterType: 'default'
+    }
   })
+  const setFilterMode = arg => {
+    setFilterModeState(prev => {
+      const newFilterMode = arg instanceof Function ? arg(prev) : arg
+      localStorage.setItem('filterMode', JSON.stringify(newFilterMode))
+      return newFilterMode
+    })
+  }
 
   const handleAddTask = task => {
     setTaskList(prev => [ 

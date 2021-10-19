@@ -2,7 +2,7 @@
 import { useRef, useState, useEffect } from 'react'
 import React from 'react'
 
-import { ButtonPopup } from './Components/Popup/Popup.js'
+import { ButtonPopup } from '../Popup/Popup.js'
 
 
 function FormInput({ title, onChange, inputRef }) {
@@ -55,13 +55,13 @@ function FormInput({ title, onChange, inputRef }) {
 
 
 export default function InputArea({ addTask }) {
+  const inputRef = useRef()
   const [ title, setTitle ] = useState('')
   const formData = useRef({
     title: '',
     description: '',
     data: '',
   })
-  const inputRef = useRef()
 
   function handleSubmit(  ) {
     if (formData.current.title !== '') {
@@ -108,7 +108,9 @@ export default function InputArea({ addTask }) {
           inputRef={inputRef}
         ></FormInput>
       </ButtonPopup>
-      <button onClick={handleSubmit} className="btn"><i className="fas fa-arrow-right"></i></button>
+      <button onClick={handleSubmit} className="btn">
+        <i className="fas fa-arrow-right"></i>
+      </button>
     </div>
   )
 }
